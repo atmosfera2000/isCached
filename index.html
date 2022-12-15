@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 200px;
+            height: auto;
+        }
+    </style>
+    <script>
+        const resources = performance.getEntriesByType("navigation");         
+        setTimeout(() => {
+            if (resources[0].transferSize === 0) {
+                console.log('local hit')
+            } else if (resources[0].transferSize > 0 && resources[0].encodedBodySize > 0 && resources[0].transferSize < resources[0].encodedBodySize ) {
+                console.log('local hit (after HTTP 304)') 
+            } else {
+                console.log('miss (HTTP 200 OK)')
+            }
+        }, 0);   
+    </script>
+</head>
+<body>
+    <div>
+        <img src="img/header.jpg" alt="img">
+        <img src="img/photo1.png" alt="img">
+        <img src="img/photo2.png" alt="img">
+        <img src="img/video.png" alt="img">
+        <img src="img/view_sec.jpg" alt="img">
+    </div>    
+</body>
+</html>
